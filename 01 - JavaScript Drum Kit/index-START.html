@@ -59,7 +59,24 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  window.addEventListener('keydown', function (q) {                           //the eventListener will listen on the action when the client press on the keyboard ('keydown')
+    const audio = document.querySelector(`audio[data-key='${q.keyCode}']`);
+    const key = document.querySelector(`.key[data-key='${q.keyCode}']`);
+    console.log(audio);
+    if (!audio) return; //if there is no audio on the other characters on the keyboard, it return nothing (null)
+    audio.currentTime = 0; //this will add the sound effect instantly after one another without delay. That's why the value is 0
+    audio.play(q);
+    key.classList.add('playing');
+  });
 
+  function removeTransition(q) {
+    if(q.propertyName !== 'transform') return;
+
+    this.classList.remove('playing');
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 </script>
 
 
